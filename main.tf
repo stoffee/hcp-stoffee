@@ -36,7 +36,7 @@ data "aws_arn" "main" {
 }
 
 resource "aws_vpc_peering_connection_accepter" "main" {
-  vpc_peering_connection_id = hcp_aws_network_peering.example_peering.provider_peering_id
+  vpc_peering_connection_id = hcp_aws_network_peering.hvn_peering.provider_peering_id
   auto_accept               = true
 }
 
@@ -54,7 +54,7 @@ resource "hcp_hvn_route" "hvn_route" {
   hvn_link         = hcp_hvn.hvn.self_link
   hvn_route_id     = "hcp-${var.stoffee}-hvn-route"
   destination_cidr = aws_vpc.main.cidr_block
-  target_link      = hcp_aws_network_peering.example.self_link
+  target_link      = hcp_aws_network_peering.hvn_peering.self_link
 }
 
 // Create a Consul cluster in the same region and cloud provider as the HVN
